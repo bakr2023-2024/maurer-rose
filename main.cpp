@@ -48,9 +48,9 @@ int main()
         {
             for (int i = 0; i < 360; i++)
             {
-                DrawLine(outline[i].x * scale + origin.x, outline[i].y * scale + origin.y,
-                         outline[i + 1].x * scale + origin.x, outline[i + 1].y * scale + origin.y,
-                         BLUE);
+                DrawLineEx({outline[i].x * scale + origin.x, outline[i].y * scale + origin.y},
+                           {outline[i + 1].x * scale + origin.x, outline[i + 1].y * scale + origin.y},
+                           4.0f, RED);
             }
         }
         EndDrawing();
