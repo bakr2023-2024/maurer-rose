@@ -26,6 +26,7 @@ int main(int argc, char **argv)
         n = stoi(argv[1]);
     int sw = 960, sh = 720;
     InitWindow(sw, sh, "Program");
+    SetTraceLogLevel(LOG_NONE);
     float scale = 300.0f;
     Vector2 *points = new Vector2[361];
     Vector2 *outline = new Vector2[361];
