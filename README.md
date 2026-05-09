@@ -29,8 +29,10 @@ all arguments are optional and positional
 
 ### examples
 
+`n = 6`, `d = 71`
+
 ![preview for n = 6, d = 71](examples/preview1.png)
-n = 6, d = 71
+
+`n = 2`, `d = 29`
 
 ![preview for n = 2, d = 29](examples/preview2.png)
-n = 2, d = 29
