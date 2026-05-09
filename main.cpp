@@ -1,13 +1,31 @@
 #include <raylib.h>
 #define _USE_MATH_DEFINES
 #include <cmath>
-#include <iostream>
+#include <string>
 using namespace std;
-int main()
+Color hexToRGB(unsigned long hex)
 {
+    return Color{
+        (unsigned char)(hex >> 16 & 0xff),
+        (unsigned char)(hex >> 8 & 0xff),
+        (unsigned char)(hex & 0xff),
+        255};
+}
+int main(int argc, char **argv)
+{
+    Color backgroundColor = BLACK;
+    Color roseColor = WHITE;
+    int n = 6, d = 71;
+    if (argc == 5)
+        roseColor = hexToRGB(stoul(argv[4], nullptr, 0));
+    if (argc >= 4)
+        backgroundColor = hexToRGB(stoul(argv[3], nullptr, 0));
+    if (argc >= 3)
+        d = stoi(argv[2]);
+    if (argc >= 2)
+        n = stoi(argv[1]);
     int sw = 960, sh = 720;
     InitWindow(sw, sh, "Program");
-    int n = 6, d = 71;
     float scale = 300.0f;
     Vector2 *points = new Vector2[361];
     Vector2 *outline = new Vector2[361];
@@ -37,12 +55,12 @@ int main()
             scale = max(min(scale, 500.0f), 100.0f);
         }
         BeginDrawing();
-        ClearBackground(BLACK);
+        ClearBackground(backgroundColor);
         for (int i = 0; i < 360; i++)
         {
             DrawLine(points[i].x * scale + origin.x, points[i].y * scale + origin.y,
                      points[i + 1].x * scale + origin.x, points[i + 1].y * scale + origin.y,
-                     BLUE);
+                     roseColor);
         }
         if (outlineOn)
         {
