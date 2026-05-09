@@ -10,24 +10,23 @@ int main()
     int n = 6, d = 71;
     float scale = 300.0f;
     Vector2 *points = new Vector2[361];
-    Vector2 *outlines = new Vector2[361];
+    Vector2 *outline = new Vector2[361];
     Vector2 origin = Vector2{sw / 2.0f, sh / 2.0f};
-    points[0] = outlines[0] = origin;
-    for (int i = 1; i <= 360; i++)
+    for (int i = 0; i <= 360; i++)
     {
         float k1 = i * d * M_PI / 180;
-        float r1 = scale * sinf(n * k1);
-        points[i] = Vector2{r1 * cosf(k1) + origin.x, r1 * sinf(k1) + origin.y};
+        float r1 = sinf(n * k1);
+        points[i] = Vector2{r1 * cosf(k1), r1 * sinf(k1)};
         float k2 = i * M_PI / 180;
-        float r2 = scale * sinf(n * k2);
-        outlines[i] = Vector2{r2 * cosf(k2) + origin.x, r2 * sinf(k2) + origin.y};
+        float r2 = sinf(n * k2);
+        outline[i] = Vector2{r2 * cosf(k2), r2 * sinf(k2)};
     }
     float zoomFactor = 1.1f;
-    bool outlinesOn = false;
+    bool outlineOn = false;
     while (!WindowShouldClose())
     {
         if (IsKeyPressed(KEY_O))
-            outlinesOn = !outlinesOn;
+            outlineOn = !outlineOn;
         float wheel = GetMouseWheelMove();
         if (wheel != 0)
         {
@@ -36,25 +35,28 @@ int main()
             else
                 scale /= zoomFactor;
             scale = max(min(scale, 500.0f), 100.0f);
-            for (int i = 1; i <= 360; i++)
-            {
-                float k1 = i * d * M_PI / 180;
-                float r1 = scale * sinf(n * k1);
-                points[i] = Vector2{r1 * cosf(k1) + origin.x, r1 * sinf(k1) + origin.y};
-                float k2 = i * M_PI / 180;
-                float r2 = scale * sinf(n * k2);
-                outlines[i] = Vector2{r2 * cosf(k2) + origin.x, r2 * sinf(k2) + origin.y};
-            }
         }
         BeginDrawing();
         ClearBackground(BLACK);
-        DrawLineStrip(points, 361, BLUE);
-        if (outlinesOn)
-            DrawSplineLinear(outlines, 361, 4.0f, RED);
+        for (int i = 0; i < 360; i++)
+        {
+            DrawLine(points[i].x * scale + origin.x, points[i].y * scale + origin.y,
+                     points[i + 1].x * scale + origin.x, points[i + 1].y * scale + origin.y,
+                     BLUE);
+        }
+        if (outlineOn)
+        {
+            for (int i = 0; i < 360; i++)
+            {
+                DrawLine(outline[i].x * scale + origin.x, outline[i].y * scale + origin.y,
+                         outline[i + 1].x * scale + origin.x, outline[i + 1].y * scale + origin.y,
+                         BLUE);
+            }
+        }
         EndDrawing();
     }
     delete[] points;
-    delete[] outlines;
+    delete[] outline;
     CloseWindow();
     return 0;
 }
