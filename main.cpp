@@ -23,10 +23,13 @@ int main()
     bool outlinesOn = false;
     while (!WindowShouldClose())
     {
+        if (IsKeyPressed(KEY_O))
+            outlinesOn = !outlinesOn;
         BeginDrawing();
         ClearBackground(BLACK);
         DrawLineStrip(points, 361, BLUE);
-        DrawSplineLinear(outlines, 361, 4.0f, RED);
+        if (outlinesOn)
+            DrawSplineLinear(outlines, 361, 4.0f, RED);
         EndDrawing();
     }
     delete[] points;
