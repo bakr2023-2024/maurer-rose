@@ -10,7 +10,7 @@ int main()
     Vector2 *points = new Vector2[361];
     Vector2 *outlines = new Vector2[361];
     Vector2 origin = Vector2{sw / 2.0f, sh / 2.0f};
-    points[0] = origin;
+    points[0] = outlines[0] = origin;
     for (int i = 1; i <= 360; i++)
     {
         float k1 = i * d * M_PI / 180;
